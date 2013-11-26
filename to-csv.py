@@ -81,6 +81,8 @@ field_names = {
     'top-referrers':[
         "date",
         "portal",
+        'url',
+        'count',
     ],
     'top-searches':[
         "date",
@@ -95,6 +97,7 @@ def main():
         os.mkdir('csv')
     write_table('site')
     write_table('top-searches', transform_search)
+    write_table('top-referrers', transform_referrer)
 
 def write_table(table_name, transform_func = lambda x: [x]):
     f = open(os.path.join('csv', table_name + '.csv'), 'w')
@@ -123,6 +126,20 @@ def transform_search(widerow):
             'portal': widerow['portal'],
             'date': widerow['date'],
             'search-term': search,
+            'count': count,
+        }
+        yield longrow
+
+def transform_referrer(widerow):
+    counts = widerow['count']
+    host = widerow['view-id']
+    del(widerow['view-id'])
+
+    for route, count in counts.items():
+        longrow = {
+            'portal': widerow['portal'],
+            'date': widerow['date'],
+            'url': host + route,
             'count': count,
         }
         yield longrow
