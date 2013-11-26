@@ -1,6 +1,6 @@
 {
   "name": "socrata-metrics-api",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Download from the Socrata metrics API",
   "main": "download.js",
   "scripts": {
