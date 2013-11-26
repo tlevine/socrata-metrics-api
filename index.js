@@ -33,22 +33,30 @@ function download() {
   function downloadPortal(portal) {
     var day = new Date('2010-01-01')
     while (day <= new Date()) {
-      var identifier = [day.getFullYear(), day.getMonth() + 1, day.getDate(), portal].join('-')
+      var datestamp = [day.getFullYear(), day.getMonth() + 1, day.getDate()].join('-')
+      if (!fs.existsSync('data/' + datestamp)){
+        fs.mkdirSync('data/' + datestamp)
+      }
+      ['site','top-datasets','top-referrers','top-embeds','top-searches'].map(function(subdir){
+        if (!fs.existsSync('data/' + datestamp + '/' + subdir)){
+          fs.mkdirSync('data/' + datestamp + '/' + subdir)
+        }
+      })
 
-      fs.exists('site-' + identifier, function(yes){
-        if (!yes) metrics.daily.site(portal, day, write('site-' + identifier))
+      fs.exists(datestamp + '/site/' + portal, function(yes){
+        if (!yes) metrics.daily.site(portal, day, write(datestamp + '/site/' + portal))
       })
-      fs.exists('top-datasets-' + identifier, function(yes){
-        if (!yes) metrics.daily.top('DATASETS', portal, date, write('top-datasets-' + identifier))
+      fs.exists(datestamp + 'top-datasets' + portal, function(yes){
+        if (!yes) metrics.daily.top('DATASETS', portal, date, write(datestamp + '/top-datasets/' + portal))
       })
-      fs.exists('top-referrers-' + identifier, function(yes){
-        if (!yes) metrics.daily.top('REFERRERS', portal, date, write('top-referrers-' + identifier))
+      fs.exists(datestamp + '/top-referrers/' + portal, function(yes){
+        if (!yes) metrics.daily.top('REFERRERS', portal, date, write('/top-referrers/' + portal))
       })
-      fs.exists('top-embeds-' + identifier, function(yes){
-        if (!yes) metrics.daily.top('EMBEDS', portal, date, write('top-embeds-' + identifier))
+      fs.exists(datestamp + '/top-embeds/' + portal, function(yes){
+        if (!yes) metrics.daily.top('EMBEDS', portal, date, write('/top-embeds/' + portal))
       })
-      fs.exists('top-searches-' + identifier, function(yes){
-        if (!yes) metrics.daily.top('SEARCHES', portal, date, write('top-searches-' + identifier))
+      fs.exists(datestamp + '/top-searches/' + portal, function(yes){
+        if (!yes) metrics.daily.top('SEARCHES', portal, date, write('/top-searches/' + portal))
       })
 
       day.setDate(day.getDate() + 1)
@@ -57,7 +65,7 @@ function download() {
 
   function write (filename) {
     return function(body) {
-      fs.writeFile('data/' + filename, JSON.stringify(body), function(){})
+      fs.writeFile('data/' + filename + '.json', JSON.stringify(body), function(){})
     }
   }
 }
