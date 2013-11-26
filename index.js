@@ -31,9 +31,24 @@ function download() {
   portals.map(downloadPortal)
   
   function downloadPortal(portal) {
-    var day = new Date('2010-01-01')
-    while (day <= new Date()) {
-      var datestamp = [day.getFullYear(), day.getMonth() + 1, day.getDate()].join('-')
+    getDays().map(downloadPortalDay)
+
+    function getDays() {
+      var days = []
+      var day = new Date('2013-01-01')
+      while (day <= new Date()) {
+        days.push(new Date(day.setDate(day.getDate() + 1)))
+      }
+      return days
+    }
+
+    function downloadPortalDay(day) {
+      
+      var datestamp = [
+        day.getFullYear(),
+        (day.getMonth() + 1 <= 9 ? '0' : '') + (day.getMonth() + 1),
+        (day.getDate() <= 9 ? '0' : '') + (day.getDate())
+      ].join('-')
       if (!fs.existsSync('data/' + datestamp)){
         fs.mkdirSync('data/' + datestamp)
       }
@@ -58,8 +73,6 @@ function download() {
       fs.exists(datestamp + '/top-searches/' + portal, function(yes){
         if (!yes) metrics.daily.top('SEARCHES', portal, date, write('/top-searches/' + portal))
       })
-
-      day.setDate(day.getDate() + 1)
     }
   }
 
