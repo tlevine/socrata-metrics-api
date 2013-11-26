@@ -2,13 +2,8 @@
 
 var metrics  = require('./site-metrics')
   , fs       = require('fs')
-  , argv     = require('optimist').argv
 
-var mode = argv._.length > 0 ? argv._[0] : ''
-if (mode === 'download') {
-  download()
-}
-
+download()
 function download() {
   var portals = [
     'data.austintexas.gov',

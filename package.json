@@ -2,9 +2,8 @@
   "name": "socrata-metrics-api",
   "version": "0.0.0",
   "description": "Download from the Socrata metrics API",
-  "main": "index.js",
+  "main": "download.js",
   "scripts": {
-    "download": "node index.js download",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,8 +16,7 @@
     "data"
   ],
   "dependencies": {
-    "request": "~2.27.0",
-    "optimist": "~0.6.0"
+    "request": "~2.27.0"
   },
   "author": "Thomas Levine <.@thomaslevine.com>",
   "license": "BSD-2-Clause",
