@@ -4,6 +4,7 @@
   "description": "Download from the Socrata metrics API",
   "main": "index.js",
   "scripts": {
+    "download": "node index.js download",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
