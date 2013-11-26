@@ -35,7 +35,7 @@ function download() {
 
     function getDays() {
       var days = []
-      var day = new Date('2013-01-01')
+      var day = new Date('2013-11-01')
       while (day <= new Date()) {
         days.push(new Date(day.setDate(day.getDate() + 1)))
       }
