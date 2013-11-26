@@ -22,7 +22,11 @@ module.exports.raw.top = function(topType, portal, start, end, callback) {
 
 function startEnd(day) {
   date = new Date(day)
-  var isoDate = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-')
+  var isoDate = [
+    day.getFullYear(),
+    (day.getMonth() + 1 <= 9 ? '0' : '') + (day.getMonth() + 1),
+    (day.getDate() <= 9 ? '0' : '') + (day.getDate())
+  ].join('-')
   var start = new Date(isoDate).getTime()
   var end = start + 24 * 3600 * 1000
   return {"start":start,"end":end,"isoDate":isoDate}

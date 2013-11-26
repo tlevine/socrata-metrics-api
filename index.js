@@ -62,16 +62,16 @@ function download() {
         if (!yes) metrics.daily.site(portal, day, write(datestamp + '/site/' + portal))
       })
       fs.exists(datestamp + 'top-datasets' + portal, function(yes){
-        if (!yes) metrics.daily.top('DATASETS', portal, date, write(datestamp + '/top-datasets/' + portal))
+        if (!yes) metrics.daily.top('DATASETS', portal, day, write(datestamp + '/top-datasets/' + portal))
       })
       fs.exists(datestamp + '/top-referrers/' + portal, function(yes){
-        if (!yes) metrics.daily.top('REFERRERS', portal, date, write('/top-referrers/' + portal))
+        if (!yes) metrics.daily.top('REFERRERS', portal, day, write('/top-referrers/' + portal))
       })
       fs.exists(datestamp + '/top-embeds/' + portal, function(yes){
-        if (!yes) metrics.daily.top('EMBEDS', portal, date, write('/top-embeds/' + portal))
+        if (!yes) metrics.daily.top('EMBEDS', portal, day, write('/top-embeds/' + portal))
       })
       fs.exists(datestamp + '/top-searches/' + portal, function(yes){
-        if (!yes) metrics.daily.top('SEARCHES', portal, date, write('/top-searches/' + portal))
+        if (!yes) metrics.daily.top('SEARCHES', portal, day, write('/top-searches/' + portal))
       })
     }
   }
