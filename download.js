@@ -30,7 +30,7 @@ function download() {
 
     function getDays() {
       var days = []
-      var day = new Date('2013-01-01')
+      var day = new Date('2010-01-01')
       while (day <= new Date()) {
         days.push(new Date(day.setDate(day.getDate() + 1)))
       }
@@ -52,21 +52,20 @@ function download() {
           fs.mkdirSync('data/' + datestamp + '/' + subdir)
         }
       })
-
       fs.exists(datestamp + '/site/' + portal, function(yes){
         if (!yes) metrics.daily.site(portal, day, write(datestamp + '/site/' + portal))
       })
-      fs.exists(datestamp + 'top-datasets' + portal, function(yes){
+      fs.exists(datestamp + '/top-datasets/' + portal, function(yes){
         if (!yes) metrics.daily.top('DATASETS', portal, day, write(datestamp + '/top-datasets/' + portal))
       })
       fs.exists(datestamp + '/top-referrers/' + portal, function(yes){
-        if (!yes) metrics.daily.top('REFERRERS', portal, day, write('/top-referrers/' + portal))
+        if (!yes) metrics.daily.top('REFERRERS', portal, day, write(datestamp + '/top-referrers/' + portal))
       })
       fs.exists(datestamp + '/top-embeds/' + portal, function(yes){
-        if (!yes) metrics.daily.top('EMBEDS', portal, day, write('/top-embeds/' + portal))
+        if (!yes) metrics.daily.top('EMBEDS', portal, day, write(datestamp + '/top-embeds/' + portal))
       })
       fs.exists(datestamp + '/top-searches/' + portal, function(yes){
-        if (!yes) metrics.daily.top('SEARCHES', portal, day, write('/top-searches/' + portal))
+        if (!yes) metrics.daily.top('SEARCHES', portal, day, write(datestamp + '/top-searches/' + portal))
       })
     }
   }
