@@ -35,12 +35,21 @@ function download() {
     while (day <= new Date()) {
       var identifier = [day.getFullYear(), day.getMonth() + 1, day.getDate(), portal].join('-')
 
-      metrics.daily.site(portal, day, write('site-' + identifier))
-
-      metrics.daily.top('DATASETS', portal, date, write('top-datasets-' + identifier))
-      metrics.daily.top('REFERRERS', portal, date, write('top-referrers-' + identifier))
-      metrics.daily.top('EMBEDS', portal, date, write('top-embeds-' + identifier))
-      metrics.daily.top('SEARCHES', portal, date, write('top-searches-' + identifier))
+      fs.exists('site-' + identifier, function(yes){
+        if (!yes) metrics.daily.site(portal, day, write('site-' + identifier))
+      })
+      fs.exists('top-datasets-' + identifier, function(yes){
+        if (!yes) metrics.daily.top('DATASETS', portal, date, write('top-datasets-' + identifier))
+      })
+      fs.exists('top-referrers-' + identifier, function(yes){
+        if (!yes) metrics.daily.top('REFERRERS', portal, date, write('top-referrers-' + identifier))
+      })
+      fs.exists('top-embeds-' + identifier, function(yes){
+        if (!yes) metrics.daily.top('EMBEDS', portal, date, write('top-embeds-' + identifier))
+      })
+      fs.exists('top-searches-' + identifier, function(yes){
+        if (!yes) metrics.daily.top('SEARCHES', portal, date, write('top-searches-' + identifier))
+      })
 
       day.setDate(day.getDate() + 1)
     }
