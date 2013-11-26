@@ -7,10 +7,14 @@ field_names = {
     'site': [
         "datasets-created-total",
         "datasets-deleted-total",
+        "datasets-deleted-href",
+        "datasets-deleted-blobby",
         "datasets-created-snapshot-total",
         "datasets-deleted-snapshot-total",
         "datasets-created-blobby-total",
+        "datasets-created-blobby",
         "datasets-deleted-blobby-total",
+        "datasets-created-href",
         "datasets-created-href-total",
         "datasets-deleted-href-total",
         "charts-created-total",
@@ -21,6 +25,7 @@ field_names = {
         "filters-deleted-total",
         "rows-created-total",
         "rows-deleted-total",
+        "users-created",
         "page-views-total",
         "embeds-total",
         "embeds",
@@ -54,6 +59,12 @@ field_names = {
         "charts-created",
         "rows-created",
         "disk-usage",
+        "geocoding-requests",
+        "shares",
+        "app-token-created",
+        "comments",
+        "ratings-total",
+        "ratings-count",
         "date",
         "portal",
     ]
@@ -71,11 +82,14 @@ def write_table(table_name):
     for date in os.listdir('data'):
         x = os.path.join('data', date, table_name)
         for portal in os.listdir(x):
-            g = open(os.path.join(x, portal))
-            c.writerow(json.load(g))
-            g.close()
-            break
-        break
+            y = os.path.join(x, portal)
+            try:
+                g = open(y)
+                c.writerow(json.load(g))
+                g.close()
+            except:
+                print(y)
+                raise
     f.close()
 
 if __name__ == '__main__':

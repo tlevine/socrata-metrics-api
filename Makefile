@@ -3,3 +3,6 @@ deps:
 
 download:
 	./download.js
+
+csv:
+	./to-csv.py
