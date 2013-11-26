@@ -1,0 +1,24 @@
+{
+  "name": "socrata-metrics-api",
+  "version": "0.0.0",
+  "description": "Download from the Socrata metrics API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tlevine/socrata-metrics-api.git"
+  },
+  "keywords": [
+    "socrata",
+    "open",
+    "data"
+  ],
+  "author": "Thomas Levine <.@thomaslevine.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/tlevine/socrata-metrics-api/issues"
+  },
+  "homepage": "https://github.com/tlevine/socrata-metrics-api"
+}
