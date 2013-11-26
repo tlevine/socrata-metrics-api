@@ -67,15 +67,36 @@ field_names = {
         "ratings-count",
         "date",
         "portal",
-    ]
+    ],
+    'top-datasets':[
+        "view-id",
+        "count",
+        "date",
+        "portal",
+    ],
+    'top-embeds':[
+        "date",
+        "portal",
+    ],
+    'top-referrers':[
+        "date",
+        "portal",
+    ],
+    'top-searches':[
+        "date",
+        "portal",
+        'search-term',
+        'count',
+    ],
 }
 
 def main():
     if not os.path.isdir('csv'):
         os.mkdir('csv')
     write_table('site')
+    write_table('top-searches', transform_search)
 
-def write_table(table_name):
+def write_table(table_name, transform_func = lambda x: [x]):
     f = open(os.path.join('csv', table_name + '.csv'), 'w')
     c = csv.DictWriter(f, field_names[table_name])
     c.writeheader()
@@ -85,12 +106,26 @@ def write_table(table_name):
             y = os.path.join(x, portal)
             try:
                 g = open(y)
-                c.writerow(json.load(g))
+                c.writerows(transform_func(json.load(g)))
                 g.close()
             except:
                 print(y)
                 raise
     f.close()
+
+def transform_search(widerow):
+    counts = widerow['count']
+    del(widerow['count'])
+    del(widerow['view-id'])
+
+    for search, count in counts.items():
+        longrow = {
+            'portal': widerow['portal'],
+            'date': widerow['date'],
+            'search-term': search,
+            'count': count,
+        }
+        yield longrow
 
 if __name__ == '__main__':
     main()
