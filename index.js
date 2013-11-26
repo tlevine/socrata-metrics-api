@@ -1,8 +1,12 @@
-var metrics = require('./site-metrics')
-  , fs       = require('fs')
-  , optimist = require('optimist')
+#!/usr/bin/env node
 
-function main() {
+var metrics  = require('./site-metrics')
+  , fs       = require('fs')
+  , argv     = require('optimist').argv
+
+var mode = argv._.length > 0 ? argv._[0] : ''
+if (mode === 'download') {
+  download()
 }
 
 function download() {
@@ -21,6 +25,9 @@ function download() {
     'data.seattle.gov',
     'data.montgomerycountymd.gov'
   ]
+  if (!fs.existsSync('data')){
+    fs.mkdirSync('data')
+  }
   portals.map(downloadPortal)
   
   function downloadPortal(portal) {
@@ -41,7 +48,7 @@ function download() {
 
   function write (filename) {
     return function(body) {
-      fs.writeFile('data/' + filename, JSON.stringify(body))
+      fs.writeFile('data/' + filename, JSON.stringify(body), function(){})
     }
   }
 }
