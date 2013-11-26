@@ -1,5 +1,9 @@
 var metrics = require('./site-metrics')
   , fs       = require('fs')
+  , optimist = require('optimist')
+
+function main() {
+}
 
 function download() {
   var portals = [
@@ -33,7 +37,7 @@ function download() {
 
       day.setDate(day.getDate() + 1)
     }
-  })
+  }
 
   function write (filename) {
     return function(body) {
