@@ -77,6 +77,8 @@ field_names = {
     'top-embeds':[
         "date",
         "portal",
+        'url',
+        'count',
     ],
     'top-referrers':[
         "date",
@@ -97,7 +99,8 @@ def main():
         os.mkdir('csv')
     write_table('site')
     write_table('top-searches', transform_search)
-    write_table('top-referrers', transform_referrer)
+    write_table('top-embeds', transform_url)
+    write_table('top-referrers', transform_url)
 
 def write_table(table_name, transform_func = lambda x: [x]):
     f = open(os.path.join('csv', table_name + '.csv'), 'w')
@@ -116,7 +119,7 @@ def write_table(table_name, transform_func = lambda x: [x]):
                 raise
     f.close()
 
-def transform_search(widerow):
+def transform_url(widerow):
     counts = widerow['count']
     del(widerow['count'])
     del(widerow['view-id'])
