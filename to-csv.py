@@ -36,9 +36,11 @@ field_names = {
         "rows-loaded-print",
         "datasets-deleted-snapshot",
         "rows-accessed-website",
+        "rows-accessed-email",
         "rows-loaded-download",
         "rows-accessed-api",
         "rows-loaded-website",
+        "rows-loaded-email",
         "datasets-created-snapshot",
         "rows-deleted",
         "rows-accessed-rss",
@@ -65,6 +67,7 @@ field_names = {
         "comments",
         "ratings-total",
         "ratings-count",
+        "favorites",
         "date",
         "portal",
     ],
@@ -107,6 +110,8 @@ def write_table(table_name, transform_func = lambda x: [x]):
     c = csv.DictWriter(f, field_names[table_name])
     c.writeheader()
     for date in os.listdir('data'):
+        if date == '.git':
+            continue
         x = os.path.join('data', date, table_name)
         for portal in os.listdir(x):
             y = os.path.join(x, portal)
