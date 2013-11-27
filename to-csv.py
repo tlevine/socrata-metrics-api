@@ -98,7 +98,7 @@ def main():
     if not os.path.isdir('csv'):
         os.mkdir('csv')
     write_table('site')
-    write_table('top-searches', transform_search)
+#   write_table('top-searches', transform_search)
     write_table('top-embeds', transform_url)
     write_table('top-referrers', transform_url)
 
@@ -140,19 +140,20 @@ def transform_search(widerows: list):
             }
             yield longrow
 
-def transform_url(widerow):
-    counts = widerow['count']
-    host = widerow['view-id']
-    del(widerow['view-id'])
+def transform_url(widerows):
+    for widerow in widerows:
+        counts = widerow['count']
+        host = widerow['view-id']
+        del(widerow['view-id'])
 
-    for route, count in counts.items():
-        longrow = {
-            'portal': widerow['portal'],
-            'date': widerow['date'],
-            'url': host + route,
-            'count': count,
-        }
-        yield longrow
+        for route, count in counts.items():
+            longrow = {
+                'portal': widerow['portal'],
+                'date': widerow['date'],
+                'url': host + route,
+                'count': count,
+            }
+            yield longrow
 
 if __name__ == '__main__':
     main()
