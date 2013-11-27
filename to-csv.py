@@ -119,21 +119,28 @@ def write_table(table_name, transform_func = lambda x: [x]):
                 raise
     f.close()
 
+def transform_search(widerows: list):
+    if len(widerows) == 0:
+        pass
+    elif len(widerows) > 1:
+        print(widerows)
+        raise ValueError("I don't know what to do with multiple elements.")
+    else:
+        widerow = widerows[0]
+        counts = widerow['count']
+        del(widerow['count'])
+        del(widerow['view-id'])
+
+        for search, count in counts.items():
+            longrow = {
+                'portal': widerow['portal'],
+                'date': widerow['date'],
+                'search-term': search,
+                'count': count,
+            }
+            yield longrow
+
 def transform_url(widerow):
-    counts = widerow['count']
-    del(widerow['count'])
-    del(widerow['view-id'])
-
-    for search, count in counts.items():
-        longrow = {
-            'portal': widerow['portal'],
-            'date': widerow['date'],
-            'search-term': search,
-            'count': count,
-        }
-        yield longrow
-
-def transform_referrer(widerow):
     counts = widerow['count']
     host = widerow['view-id']
     del(widerow['view-id'])
